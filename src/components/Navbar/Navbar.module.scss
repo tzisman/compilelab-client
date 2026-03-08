@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa; // אפור בהיר מאוד
+  border-bottom: 1px solid #ddd;
+  font-family: sans-serif;
+
+  .logo {
+    a {
+      font-weight: bold;
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .navLinks {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+
+    li {
+      a {
+        text-decoration: none;
+        color: #333;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &.userInfo {
+        font-weight: bold;
+        color: #555;
+        padding-left: 10px;
+        border-left: 1px solid #ccc;
+      }
+    }
+  }
+}
