@@ -22,7 +22,7 @@ const Navbar = () => {
           <Link to="/instructors">instructors</Link>
         </li>
         <li>
-          <Link to="/reqwests">reqwests</Link>
+          <Link to="/requests">requests</Link>
         </li>
         
         {isAuthenticated ? (
