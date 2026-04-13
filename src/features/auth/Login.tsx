@@ -2,10 +2,10 @@ import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../../api/apiSlice';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from './authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; 
 import type { LoginRequest } from '../../types/user.types';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import type { SerializedError } from '@reduxjs/toolkit';
+import styles from './Auth.module.scss'; 
 
 interface MyApiError {
   message?: string;
@@ -31,37 +31,39 @@ const Login = () => {
   const error = err as FetchBaseQueryError;
 
   const errorMessage = 
-    (error.data as MyApiError)?.message || 'התחברות נכשלה';
+    (error.data as MyApiError)?.message || 'Login failed';
 
-  alert('שגיאה: ' + errorMessage);
+  alert('Error: ' + errorMessage);
 }
   };
 
-  return (
-    <div className="login-container">
+ return (
+    <div className={styles.authContainer}> 
       <h2>Login</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <form className={styles.authForm} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.formGroup}>
           <label>Email:</label>
           <input 
             type="email" 
             {...register("email", { required: "Email is required" })} 
           />
-          {errors.email && <p className="error">{errors.email.message}</p>}
+          {errors.email && <p className={styles.errorText}>{errors.email.message}</p>}
         </div>
 
-        <div>
+        <div className={styles.formGroup}>
           <label>Password:</label>
           <input 
             type="password" 
             {...register("password", { required: "Password is required" })} 
           />
-          {errors.password && <p className="error">{errors.password.message}</p>}
+          {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
         </div>
 
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
+
+        <p>Don't have an account yet? <Link to="/signup">sign up</Link></p>
       </form>
     </div>
   );
