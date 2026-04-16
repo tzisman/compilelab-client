@@ -1,0 +1,76 @@
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.title {
+  font-size: 1.4rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.statsContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  background: #f8fbfe;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .statLabel {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .statValue {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #3498db;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background-color: #dcdde1;
+}
+
+.manageBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+}
