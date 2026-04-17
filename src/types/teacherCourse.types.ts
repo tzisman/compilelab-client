@@ -6,6 +6,7 @@ export interface Course {
 }
 
 export interface CreateCourseRequest {
-    name: string;
-    lecturerId: number;
+  id: number;
+  name: string;
+  lecturerId: number;
 }

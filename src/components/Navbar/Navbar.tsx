@@ -3,17 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../features/auth/authSlice'; 
 import type { RootState } from '../../app/store'; 
 import styles from './Navbar.module.scss'; 
+import { apiSlice } from '../../api/apiSlice';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // שליפת המשתמש מה-Redux
   const { user } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login'); // אופציונלי: שליחת המשתמש לדף התחברות אחרי יציאה
+    dispatch(apiSlice.util.resetApiState());
+    navigate('/login'); 
   };
 
   return (

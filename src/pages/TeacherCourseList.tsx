@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react'; // 1. הוספנו useState
 import TeacherCourseCard from '../features/teacherCourse/TeacherCourseCard';
-import styles from './CourseList.module.scss';
-import { useGetTeacherCoursesQuery } from '../api/apiSlice';
-
+import styles from './TeacherCourseList.module.scss';
+import { useGetTeacherCoursesQuery } from '../features/teacherCourse/teacherCourseApi';
+import AddTeacherCourseModal from '../features/teacherCourse/AddTeacherCourseModal';
 const TeacherCourseList: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const { data: courses, isLoading, error } = useGetTeacherCoursesQuery();
 
   if (isLoading) {
@@ -18,10 +20,15 @@ const TeacherCourseList: React.FC = () => {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>My Courses</h1>
-        <button className={styles.addBtn}>+ Create New Course</button>
+        
+        <button 
+          className={styles.addBtn} 
+          onClick={() => setIsModalOpen(true)}
+        >
+          + Create New Course
+        </button>
       </header>
 
-      
       {courses?.length === 0 ? (
         <div className={styles.emptyState}>
           <p>You haven't created any courses yet.</p>
@@ -34,6 +41,12 @@ const TeacherCourseList: React.FC = () => {
           ))}
         </div>
       )}
+
+
+      <AddTeacherCourseModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };

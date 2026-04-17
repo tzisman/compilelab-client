@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useLoginMutation } from '../../api/apiSlice';
+import { useLoginMutation } from './authApi';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from './authSlice';
 import { useNavigate, Link } from 'react-router-dom'; 
