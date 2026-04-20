@@ -1,0 +1,65 @@
+.container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: 1rem;
+
+  button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+
+    &.active {
+      background: #3498db;
+      color: white;
+      border-color: #3498db;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f5f5f5;
+    }
+  }
+}
+
+.exerciseCard {
+  background: #f8f9fa;
+  padding: 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid #3498db;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+  h3 { margin: 0; font-size: 1.1rem; }
+}
+
+.viewGradesBtn {
+  padding: 8px 16px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover { background: #219150; }
+}

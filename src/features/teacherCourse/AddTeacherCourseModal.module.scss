@@ -9,6 +9,10 @@
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(4px);
+
+  display: flex;          
+  justify-content: center;
+  align-items: center;    
 }
 
 .modal {

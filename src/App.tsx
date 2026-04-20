@@ -4,6 +4,7 @@ import Login from './features/auth/Login.tsx';
 import Signup from './features/auth/Signup.tsx';
 import { NotFound, ServerDown, ServerError } from './pages/ErrorPages.tsx';
 import TeacherCourseList from './pages/TeacherCourseList.tsx';
+import TeacherCourseManagementPage from './pages/TeacherCourseManagementPage.tsx';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/requests" element={<div>Requests</div>} />
         <Route path="/login" element={<div><Login /></div>} />
         <Route path="/signup" element={<div><Signup /></div>} />
-
+        <Route path="/manage-course/:id" element={<TeacherCourseManagementPage />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="/error-500" element={<ServerError />} />
         <Route path="/server-down" element={<ServerDown />} />
