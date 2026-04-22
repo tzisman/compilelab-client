@@ -5,6 +5,8 @@ import Signup from './features/auth/Signup.tsx';
 import { NotFound, ServerDown, ServerError } from './pages/ErrorPages.tsx';
 import TeacherCourseList from './pages/TeacherCourseList.tsx';
 import TeacherCourseManagementPage from './pages/TeacherCourseManagementPage.tsx';
+import StudentCoursesList from './pages/StudentCoursesList.tsx';
+import CourseCatalogPage from './pages/CourseCatalogPage.tsx';
 
 function App() {
   return (
@@ -12,7 +14,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<div>Home Page</div>} />
-        <Route path="/studies" element={<div>Studies</div>} />
+        <Route path="/studies" element={<StudentCoursesList />} />
         <Route path="/instructors" element={<TeacherCourseList />} />
         <Route path="/requests" element={<div>Requests</div>} />
         <Route path="/login" element={<div><Login /></div>} />
@@ -21,7 +23,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
         <Route path="/error-500" element={<ServerError />} />
         <Route path="/server-down" element={<ServerDown />} />
-  
+        <Route path="/course-catalog" element={<CourseCatalogPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

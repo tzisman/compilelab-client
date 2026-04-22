@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; // 1. הוספנו useState
 import TeacherCourseCard from '../features/teacherCourse/TeacherCourseCard';
 import styles from './TeacherCourseList.module.scss';
-import { useGetTeacherCoursesQuery } from '../features/teacherCourse/teacherCourseApi.ts'; // 2. קריאה ל-API להבאת הקורסים של המורה
+import { useGetTeacherCoursesQuery } from '../features/teacherCourse/TeacherCourseApi.ts'; // 2. קריאה ל-API להבאת הקורסים של המורה
 import AddTeacherCourseModal from '../features/teacherCourse/AddTeacherCourseModal';
 const TeacherCourseList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
