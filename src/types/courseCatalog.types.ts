@@ -5,3 +5,10 @@ export interface CourseCatalog {
     studiesCount: number;
     exercisesCount: number;
 }
+
+export interface JoinToCourseRequest {
+    id: number;
+    userId: number;
+    courseId: number;
+    message: string;
+}

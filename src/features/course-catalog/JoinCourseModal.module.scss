@@ -1,0 +1,68 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  direction: ltr;
+
+  h2 { margin-bottom: 0.5rem; color: #2c3e50; }
+  p { color: #7f8c8d; margin-bottom: 1.5rem; }
+}
+
+.textArea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: none;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+
+  &:focus { border-color: #3498db; outline: none; }
+}
+
+.error { color: #e74c3c; font-size: 0.85rem; display: block; margin-bottom: 1rem; }
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.submitBtn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  &:hover { background: #2980b9; }
+}
+
+.cancelBtn {
+  background: #ecf0f1;
+  color: #7f8c8d;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover { background: #bdc3c7; }
+}
