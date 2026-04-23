@@ -7,6 +7,7 @@ import TeacherCourseList from './pages/TeacherCourseList.tsx';
 import TeacherCourseManagementPage from './pages/TeacherCourseManagementPage.tsx';
 import StudentCoursesList from './pages/StudentCoursesList.tsx';
 import CourseCatalogPage from './pages/CourseCatalogPage.tsx';
+import LecturerRequestsPage from './pages/LecturerRequestsPage.tsx';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/" element={<div>Home Page</div>} />
         <Route path="/studies" element={<StudentCoursesList />} />
         <Route path="/instructors" element={<TeacherCourseList />} />
-        <Route path="/requests" element={<div>Requests</div>} />
+        <Route path="/requests" element={<LecturerRequestsPage />} />
         <Route path="/login" element={<div><Login /></div>} />
         <Route path="/signup" element={<div><Signup /></div>} />
         <Route path="/manage-course/:id" element={<TeacherCourseManagementPage />} />
