@@ -1,0 +1,266 @@
+.accordionItem {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.open {
+    border-color: #4299e1;
+    box-shadow: 0 4px 20px rgba(66, 153, 225, 0.08);
+  }
+}
+
+.header {
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  
+  &:hover { background: #f7fafc; }
+
+  h3 { margin: 0; font-size: 1.1rem; color: #2d3748; }
+  .badge { font-size: 0.75rem; background: #ebf8ff; color: #2b6cb0; padding: 2px 8px; border-radius: 4px; }
+  .desc { margin: 0.5rem 0 0; font-size: 0.9rem; color: #718096; }
+}
+
+.content {
+  padding: 1.25rem;
+  background: #fcfcfd;
+  border-top: 1px solid #edf2f7;
+
+  h4 { margin-top: 0; color: #4a5568; font-size: 1rem; }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  
+  th { text-align: left; padding: 10px; color: #a0aec0; font-size: 0.8rem; text-transform: uppercase; }
+  td { padding: 10px; border-bottom: 1px solid #edf2f7; }
+  code { background: #edf2f7; padding: 2px 6px; border-radius: 4px; color: #e53e3e; }
+}
+
+.deleteBtn {
+  color: #e53e3e;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  &:hover { text-decoration: underline; }
+}
+
+.addTestBtn {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  &:hover { background: #3182ce; }
+}
+
+.quickAddForm {
+  display: flex;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e0;
+  margin-top: 1rem;
+
+  .inputGroup {
+    flex: 1;
+    input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-family: monospace; // טוב למקרי קלט/פלט של קוד
+      font-size: 0.9rem;
+
+      &:focus {
+        outline: none;
+        border-color: #4299e1;
+      }
+    }
+  }
+
+  .addSubmitBtn {
+    background: #48bb78;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #38a169;
+    }
+
+    &:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #edf2f7;
+  margin: 1rem 0;
+}
+
+.editInput {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #4299e1;
+  border-radius: 4px;
+}
+
+.editBtn {
+  color: #4299e1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  font-weight: 600;
+  &:hover { text-decoration: underline; }
+}
+
+.saveBtn {
+  color: #48bb78;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  font-weight: 700;
+}
+
+.cancelBtn {
+  color: #718096;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* --- שדות הקלט (Input) בתוך הטבלה ובטופס ההוספה --- */
+.table input, 
+.quickAddForm input {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: 'Courier New', Courier, monospace; // גופן קוד מקל על קריאת קלט/פלט
+  width: 100%;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+
+  &:focus {
+    outline: none;
+    border-color: #4299e1; // כחול מותג
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    background-color: #fff;
+  }
+
+  &::placeholder {
+    color: #a0aec0;
+    font-family: sans-serif; // פלייס-הולדר בגופן רגיל
+  }
+}
+
+/* --- שורת ההוספה המהירה (Quick Add) --- */
+.quickAddForm {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f7fafc;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e0;
+
+  input {
+    flex: 1; // שהתיבות יתפסו את כל השטח הפנוי
+  }
+}
+
+/* --- כפתור ההוספה (הירוק) --- */
+.addSubmitBtn {
+  background-color: #48bb78; // ירוק הצלחה
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap; // מונע מהטקסט לרדת שורה
+
+  &:hover:not(:disabled) {
+    background-color: #38a169;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #cbd5e0;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+/* --- כפתורי הפעולה בטבלה (עריכה, שמירה, ביטול) --- */
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+}
+
+.saveBtn {
+  background-color: #ebf8ff;
+  color: #3182ce;
+  border-color: #bee3f8 !important;
+  &:hover { background-color: #3182ce; color: white; }
+}
+
+.cancelBtn {
+  background-color: #f7fafc;
+  color: #718096;
+  border-color: #e2e8f0 !important;
+  &:hover { background-color: #edf2f7; color: #2d3748; }
+}
+
+.editBtn {
+  background-color: #f7fafc;
+  color: #4a5568;
+  border-color: #e2e8f0 !important;
+  &:hover { background-color: #edf2f7; border-color: #cbd5e0 !important; }
+}
+
+.deleteBtn {
+  background-color: #fff5f5;
+  color: #c53030;
+  &:hover { background-color: #c53030; color: white; }
+}

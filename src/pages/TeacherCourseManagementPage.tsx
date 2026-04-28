@@ -1,59 +1,73 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useGetExercisesByCourseQuery } from '../features/teacherCourse/teacherCourseApi';
+// 1. נוסיף את useNavigate לייבוא מ-react-router-dom
+import { useParams, useNavigate } from 'react-router-dom';
+import { useGetExercisesByCourseQuery, useAddExerciseMutation } from '../features/exercise/exerciseApi';
+import AddExerciseModal from '../features/exercise/AddExerciseModal';
 import styles from './TeacherCourseManagement.module.scss';
+import type { CodeExercise } from '../types/exercise.types';
+import ExerciseAccordionItem from '../features/exercise/ExerciseAccordionItem';
 
 const TeacherCourseManagementPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const courseId = Number(id);
+  
+  const navigate = useNavigate();
 
-  const [viewMode, setViewMode] = useState<'students' | 'exercises'>('exercises');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const { data: exercises, isLoading } = useGetExercisesByCourseQuery(courseId);
+  const [addExercise, { isLoading: isAdding }] = useAddExerciseMutation();
 
-  const { data: exercises, isLoading, error } = useGetExercisesByCourseQuery(courseId);
+  const handleCreateExercise = async (data: Partial<CodeExercise>) => {
+    try {
+      await addExercise(data).unwrap();
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error("Failed to create exercise", err);
+    }
+  };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1>Course Management</h1>
-        <div className={styles.toggleGroup}>
+        <h1>Exercises Management</h1>
+        
+        <div className={styles.actionButtons}>
           <button 
-            className={viewMode === 'students' ? styles.active : ''} 
-            onClick={() => setViewMode('students')}
-            disabled 
+            className={styles.reportBtn} 
+            onClick={() => navigate(`/courses/${courseId}/report`)}
           >
-            By Students
+            📊 View Grades Report
           </button>
-          <button 
-            className={viewMode === 'exercises' ? styles.active : ''}
-            onClick={() => setViewMode('exercises')}
-          >
-            By Exercises
+          
+          <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
+            + New Exercise
           </button>
         </div>
       </header>
 
-      <div className={styles.content}>
-        {isLoading && <p>Loading exercises...</p>}
-        {error && <p className={styles.error}>Error loading data</p>}
+      {isLoading ? (
+        <p>Loading exercises...</p>
+      ) : (
+        <div className={styles.exerciseList}>
+          {exercises?.length === 0 ? (
+            <p>No exercises found for this course.</p>
+          ) : (
+            exercises?.map((exercise) => (
+              <ExerciseAccordionItem key={exercise.id} exercise={exercise} />
+            ))
+          )}
+        </div>
+      )}
 
-        {viewMode === 'exercises' && (
-          <div className={styles.exerciseList}>
-            {exercises?.length === 0 ? (
-              <p>No exercises found for this course.</p>
-            ) : (
-              exercises?.map((exercise) => (
-                <div key={exercise.id} className={styles.exerciseCard}>
-                  <div className={styles.info}>
-                    <h3>{exercise.exerciseName}</h3>
-                    
-                  </div>
-                  <button className={styles.viewGradesBtn}>View Grades</button>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-      </div>
+      {isModalOpen && (
+        <AddExerciseModal 
+          courseId={courseId}
+          onClose={() => setIsModalOpen(false)} 
+          onSubmit={handleCreateExercise}
+          isLoading={isAdding}
+        />
+      )}
     </div>
   );
 };

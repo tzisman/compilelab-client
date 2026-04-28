@@ -3,7 +3,7 @@ import type { Course } from '../../types/teacherCourse.types.ts';
 import styles from './CourseCard.module.scss';
 import { useNavigate } from 'react-router-dom'; 
 import { useAppSelector } from '../../app/hooks'; 
-import { useUpdateTeacherCourseMutation } from './TeacherCourseApi.ts';
+import { useUpdateTeacherCourseMutation } from './teacherCourseApi.ts';
 
 interface CourseCardProps {
   course: Course;

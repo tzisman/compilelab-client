@@ -6,7 +6,7 @@ export const teacherCourseApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTeacherCourses: builder.query<Course[], void>({
       query: () => '/api/User/lecturers',
-      providesTags: ['Courses'],
+      providesTags: ['Courses', 'CourseReport' ],
     }),
 
     getExercisesByCourse: builder.query<Exercise[], number>({

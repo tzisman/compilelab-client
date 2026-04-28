@@ -8,6 +8,7 @@ import TeacherCourseManagementPage from './pages/TeacherCourseManagementPage.tsx
 import StudentCoursesList from './pages/StudentCoursesList.tsx';
 import CourseCatalogPage from './pages/CourseCatalogPage.tsx';
 import LecturerRequestsPage from './pages/LecturerRequestsPage.tsx';
+import CourseReportPage from './features/report/CourseReportPage.tsx';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/error-500" element={<ServerError />} />
         <Route path="/server-down" element={<ServerDown />} />
         <Route path="/course-catalog" element={<CourseCatalogPage />} />
+        <Route path="/courses/:courseId/report" element={<CourseReportPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
