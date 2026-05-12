@@ -1,6 +1,6 @@
 import { apiSlice } from '../../api/apiSlice';
 import type { Course, CreateCourseRequest } from '../../types/teacherCourse.types';
-import type { Exercise } from '../../types/exercise.types'; 
+import type { CodeExercise } from '../../types/exercise.types'; 
 
 export const teacherCourseApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,7 +9,7 @@ export const teacherCourseApi = apiSlice.injectEndpoints({
       providesTags: ['Courses', 'CourseReport' ],
     }),
 
-    getExercisesByCourse: builder.query<Exercise[], number>({
+    getExercisesByCourse: builder.query<CodeExercise[], number>({
       query: (courseId) => `/api/CodeExercise/course/${courseId}`, 
       providesTags: ['Exercises'],
     }),

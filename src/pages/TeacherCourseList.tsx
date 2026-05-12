@@ -1,8 +1,8 @@
 import React, { useState } from 'react'; 
-import TeacherCourseCard from '../features/teacherCourse/TeacherCourseCard';
+import TeacherCourseCard from '../features/teacher-course/TeacherCourseCard';
 import styles from './TeacherCourseList.module.scss';
-import { useGetTeacherCoursesQuery } from '../features/teacherCourse/teacherCourseApi.ts'; 
-import AddTeacherCourseModal from '../features/teacherCourse/AddTeacherCourseModal';
+import { useGetTeacherCoursesQuery } from '../features/teacher-course/teacherCourseApi.ts'; 
+import AddTeacherCourseModal from '../features/teacher-course/AddTeacherCourseModal';
 const TeacherCourseList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   

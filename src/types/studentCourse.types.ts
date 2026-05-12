@@ -1,7 +1,8 @@
 export interface StudentCourseDisplay {
     id: number;
-    name: string;
-    lecturerName: string;
-    studiesCount: number;
-    exercisesCount: number;
+    courseId: number;
+    courseName: string;
+    courseLecturerName: string;
+    courseStudiesCount: number;
+    courseExercisesCount: number;
 }

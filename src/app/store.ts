@@ -4,6 +4,7 @@ import authReducer from '../features/auth/authSlice';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
 import { logout } from '../features/auth/authSlice';
+import courseReducer from '../features/student-course/courseSlice'; 
 
 export const globalErrorMiddleware: Middleware = ({ dispatch }) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -42,6 +43,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     
     auth: authReducer,
+    course: courseReducer,
   },
   
  

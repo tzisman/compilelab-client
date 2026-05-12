@@ -9,6 +9,8 @@ import StudentCoursesList from './pages/StudentCoursesList.tsx';
 import CourseCatalogPage from './pages/CourseCatalogPage.tsx';
 import LecturerRequestsPage from './pages/LecturerRequestsPage.tsx';
 import CourseReportPage from './features/report/CourseReportPage.tsx';
+import StudentExerciseList from './pages/StudentExerciseList.tsx';
+import ExerciseWorkspace from './features/student-answer/ExerciseWorkspace.tsx';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<div>Home Page</div>} />
         <Route path="/studies" element={<StudentCoursesList />} />
+        <Route path="/course/:courseId" element={<StudentExerciseList />} />
+        <Route path="/exercise/:exerciseId" element={<ExerciseWorkspace />} />
         <Route path="/instructors" element={<TeacherCourseList />} />
         <Route path="/requests" element={<LecturerRequestsPage />} />
         <Route path="/login" element={<div><Login /></div>} />

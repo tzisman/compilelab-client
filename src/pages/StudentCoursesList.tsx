@@ -1,6 +1,6 @@
 import React from 'react';
-import CourseCard from '../features/studentCourse/StudentCourseCard';
-import { useGetStudentCoursesQuery } from '../features/studentCourse/StudentCourseApi';
+import CourseCard from '../features/student-course/StudentCourseCard';
+import { useGetStudentCoursesQuery } from '../features/student-course/studentCourseApi';
 import styles from './StudentCourseList.module.scss';
 import { useNavigate } from 'react-router-dom';
 
