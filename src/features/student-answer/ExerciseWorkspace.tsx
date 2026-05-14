@@ -14,10 +14,11 @@ import styles from './ExerciseWorkspace.module.scss';
 const ExerciseWorkspace: React.FC = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const exId = Number(exerciseId);
-  console.log("Exercise ID from URL:", exId);
+  
   const userInCourseId = useSelector((state: RootState) => state.course.currentInCourseId);
 
   const { data: exercise, isLoading: isExLoading } = useGetStudentExerciseByIdQuery(exId);
+
   const { data: existingAnswer, isLoading: isAnsLoading } = useGetStudentAnswerByIdQuery(
     exercise?.studentAnswerId!, 
     { skip: !exercise?.studentAnswerId }
@@ -34,11 +35,15 @@ const ExerciseWorkspace: React.FC = () => {
     }
   }, [existingAnswer]);
 
+ 
+  const displayGrade = markData ? markData.mark : exercise?.grade;
+  const hasGrade = displayGrade !== null && displayGrade !== undefined;
+
+  
+  const isPassing = hasGrade ? displayGrade >= 60 : false;
+
   const onSave = async () => {
-    if (!exercise || !userInCourseId) {
-      alert("Missing course or exercise context. Please return to the course page.");
-      return;
-    }
+    if (!exercise || !userInCourseId) return;
     
     const payload = { 
       exerciseId: exId, 
@@ -47,49 +52,49 @@ const ExerciseWorkspace: React.FC = () => {
     };
     
     try {
-     
       if (exercise.studentAnswerId) {
         await updateAnswer({ id: exercise.studentAnswerId, data: payload }).unwrap();
       } else {
         await addAnswer(payload).unwrap();
       }
-      alert("Progress saved successfully!");
     } catch (err) {
-      alert("Error saving progress.");
+      console.error("Save failed", err);
     }
   };
 
-  if (isExLoading || isAnsLoading) return <div className={styles.loader}>Loading Workspace...</div>;
+  if (isExLoading) return <div className={styles.loader}>Loading...</div>;
 
   return (
     <div className={styles.workspaceContainer}>
       <div className={styles.sidebar}>
         <h1 className={styles.title}>{exercise?.name}</h1>
         <div className={styles.description}>
-          <h3>Exercise Description:</h3>
           <p>{exercise?.description}</p>
         </div>
         
-       
+        
         {markData && (
           <div className={`${styles.markBox} ${markData.isSuccess ? styles.success : styles.fail}`}>
             <h4>Test Results:</h4>
             <p className={styles.grade}>Grade: {markData.mark}</p>
             {markData.remark && <p className={styles.remark}>{markData.remark}</p>}
-            {markData.errorMessage && <pre className={styles.errorLog}>{markData.errorMessage}</pre>}
           </div>
         )}
       </div>
 
       <div className={styles.editorArea}>
         <div className={styles.toolbar}>
-          <span className={styles.langBadge}>{exercise?.programmingLanguage}</span>
+          <div className={styles.leftTools}>
+            <span className={styles.langBadge}>{exercise?.programmingLanguage}</span>
+            
+            
+            <div className={`${styles.currentGradeBadge} ${hasGrade ? (isPassing ? styles.success : styles.fail) : ''}`}>
+              Current Grade: <strong>{exercise?.grade !== null && exercise?.grade !== undefined ? exercise.grade : '--'}</strong>
+            </div>
+          </div>
+
           <div className={styles.buttons}>
-            <button 
-              className={styles.saveBtn} 
-              onClick={onSave} 
-              disabled={isAdding || isUpdating}
-            >
+            <button className={styles.saveBtn} onClick={onSave} disabled={isAdding || isUpdating}>
               {isAdding || isUpdating ? 'Saving...' : 'Save Changes'}
             </button>
             <button 
@@ -102,12 +107,10 @@ const ExerciseWorkspace: React.FC = () => {
           </div>
         </div>
 
-        
         <textarea 
           className={styles.editor}
           value={code} 
           onChange={(e) => setCode(e.target.value)} 
-          placeholder="// Your code here..."
           spellCheck={false}
         />
       </div>
