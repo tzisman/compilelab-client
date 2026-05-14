@@ -1,29 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CourseCatalogPage.module.scss';
 import CourseCatalogCard from '../features/course-catalog/CourseCatalogCard';
 import { useGetCourseCatalogQuery } from '../features/course-catalog/courseCatalogApi';
 
 const CourseCatalogPage: React.FC = () => {
-  
-  const { data: allCourses, error, isLoading } = useGetCourseCatalogQuery();
+  // ניהול מצב לחיפוש ודפדוף
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+
+  // העברת הפרמטרים ל-Hook
+  const { data: allCourses, error, isLoading, isFetching } = useGetCourseCatalogQuery({
+    page: page,
+    size: pageSize,
+    search: searchTerm
+  });
 
   if (isLoading) {
     return (
       <div className={styles.catalogContainer}>
-        <div className={styles.headerSection}>
-          <h1 className={styles.mainTitle}>Loading Catalog...</h1>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={styles.catalogContainer}>
-        <div className={styles.emptyCatalog}>
-          <h3>Oops! Something went wrong</h3>
-          <p>We couldn't fetch the courses. Please try again later.</p>
-        </div>
+        <h1 className={styles.mainTitle}>Loading Catalog...</h1>
       </div>
     );
   }
@@ -34,21 +30,53 @@ const CourseCatalogPage: React.FC = () => {
     <div className={styles.catalogContainer}>
       <header className={styles.headerSection}>
         <h1 className={styles.mainTitle}>Join a New Course</h1>
-        <p className={styles.subTitle}>Explore all our available courses and start learning today.</p>
+        
+        {/* תיבת חיפוש */}
+        <div className={styles.searchBar}>
+          <input
+            type="text"
+            placeholder="Search for a course..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setPage(1); // כשמחפשים, חוזרים לעמוד הראשון
+            }}
+          />
+        </div>
       </header>
+
+      {/* אינדיקטור טעינה בזמן דפדוף/חיפוש (אופציונלי) */}
+      {isFetching && <p>Updating results...</p>}
 
       {!hasCourses ? (
         <div className={styles.emptyCatalog}>
-          <div className={styles.emptyIcon}>📚</div>
-          <h3>No Courses Available</h3>
-          <p>Check back soon! New courses are added regularly.</p>
+          <h3>No Courses Found</h3>
         </div>
       ) : (
-        <div className={styles.catalogGrid}>
-          {allCourses.map((course) => (
-            <CourseCatalogCard key={course.id} course={course} />
-          ))}
-        </div>
+        <>
+          <div className={styles.catalogGrid}>
+            {allCourses.map((course) => (
+              <CourseCatalogCard key={course.id} course={course} />
+            ))}
+          </div>
+
+          {/* כפתורי ניווט פשוטים */}
+          <div className={styles.pagination}>
+            <button 
+              disabled={page === 1} 
+              onClick={() => setPage(p => p - 1)}
+            >
+              Previous
+            </button>
+            <span>Page {page}</span>
+            <button 
+              disabled={allCourses.length < pageSize} 
+              onClick={() => setPage(p => p + 1)}
+            >
+              Next
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
