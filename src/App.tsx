@@ -12,27 +12,31 @@ import CourseReportPage from './features/report/CourseReportPage.tsx';
 import StudentExerciseList from './pages/StudentExerciseList.tsx';
 import ExerciseWorkspace from './features/student-answer/ExerciseWorkspace.tsx';
 
+import Home from './pages/HomePage.tsx';
+
 function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<div>Home Page</div>} />
-        <Route path="/studies" element={<StudentCoursesList />} />
-        <Route path="/course/:courseId" element={<StudentExerciseList />} />
-        <Route path="/exercise/:exerciseId" element={<ExerciseWorkspace />} />
-        <Route path="/instructors" element={<TeacherCourseList />} />
-        <Route path="/requests" element={<LecturerRequestsPage />} />
-        <Route path="/login" element={<div><Login /></div>} />
-        <Route path="/signup" element={<div><Signup /></div>} />
-        <Route path="/manage-course/:id" element={<TeacherCourseManagementPage />} />
-        <Route path="/404" element={<NotFound />} />
-        <Route path="/error-500" element={<ServerError />} />
-        <Route path="/server-down" element={<ServerDown />} />
-        <Route path="/course-catalog" element={<CourseCatalogPage />} />
-        <Route path="/courses/:courseId/report" element={<CourseReportPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <main className="pt-20">
+        <Routes >
+          <Route path="/" element={<Home />} />
+          <Route path="/studies" element={<StudentCoursesList />} />
+          <Route path="/course/:courseId" element={<StudentExerciseList />} />
+          <Route path="/exercise/:exerciseId" element={<ExerciseWorkspace />} />
+          <Route path="/instructors" element={<TeacherCourseList />} />
+          <Route path="/requests" element={<LecturerRequestsPage />} />
+          <Route path="/login" element={<div><Login /></div>} />
+          <Route path="/signup" element={<div><Signup /></div>} />
+          <Route path="/manage-course/:id" element={<TeacherCourseManagementPage />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="/error-500" element={<ServerError />} />
+          <Route path="/server-down" element={<ServerDown />} />
+          <Route path="/course-catalog" element={<CourseCatalogPage />} />
+          <Route path="/courses/:courseId/report" element={<CourseReportPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
     </Router>
   );
 }
