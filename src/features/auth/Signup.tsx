@@ -1,94 +1,126 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSignupMutation } from './authApi';
 import { useDispatch } from 'react-redux';  
 import { setCredentials } from './authSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import type { SignupRequest } from '../../types/user.types';
-import styles from './Auth.module.scss';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-
+// Shadcn UI Components
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Eye, EyeOff } from 'lucide-react';
 
 const Signup = () => {
-const { register, handleSubmit, setError, formState: { errors } } = useForm<SignupRequest>();  const [signup, { isLoading }] = useSignupMutation();
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<SignupRequest>();
+  const [signup, { isLoading }] = useSignupMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
- const onSubmit = async (data: SignupRequest) => {
-  try {
-    const userData = await signup(data).unwrap();
-    dispatch(setCredentials(userData));
-    navigate('/');
-  } catch (err) {
-    const error = err as FetchBaseQueryError;
+  const [showPassword, setShowPassword] = useState(false);
 
-    if (error.status === 409) {
-      setError('email', {
-        type: 'manual',
-        message: 'This email already exists in the system, try to connect'
-      });
-    } else {
-      console.error('Registration failed:', error);
-      alert('An unexpected error occurred, please try again later');
+  const onSubmit = async (data: SignupRequest) => {
+    try {
+      const userData = await signup(data).unwrap();
+      dispatch(setCredentials(userData));
+      navigate('/');
+    } catch (err) {
+      const error = err as FetchBaseQueryError;
+      if (error.status === 409) {
+        setError('email', { type: 'manual', message: 'This email already exists' });
+      } else {
+        console.error('Registration failed:', error);
+        alert('An unexpected error occurred, please try again later');
+      }
     }
-  }
-};
+  };
 
   return (
-    <div className={styles.authContainer}>
-      <h2>Sign Up</h2>
-      <form className={styles.authForm} onSubmit={handleSubmit(onSubmit)}>
+    // שינוי ל-items-start עם pt-16 כדי לקרב את הטופס למעלה
+    <div className="w-full h-screen bg-[#334148] flex items-start justify-center p-4 pt-16 sm:pt-20 font-sans select-none overflow-hidden sm:overflow-y-auto">
+      <div className="w-full max-w-md bg-white rounded-[1.8rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto">
         
-        <div className={styles.formGroup}>
-          <label>Username:</label>
-          <input 
-            {...register('name', { required: "Username is required" })} 
-            placeholder="Username" 
-          />
-          {errors.name && <p className={styles.errorText}>{errors.name.message}</p>}
+        <div className="flex flex-col items-center mb-5 text-center shrink-0">
+          <h2 className="text-2xl font-extrabold text-cyan-500 tracking-wide m-0 uppercase">
+            Sign Up
+          </h2>
+          <p className="text-[11px] text-gray-400 mt-0.5 font-sans">Create your account to start learning</p>
         </div>
 
-        <div className={styles.formGroup}>
-          <label>Email:</label>
-          <input 
-            {...register('email', { 
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }
-            })} 
-            type="email" 
-            placeholder="Email" 
-          />
-          {errors.email && <p className={styles.errorText}>{errors.email.message}</p>}
-        </div>
+        <form className="flex flex-col gap-3.5 w-full" onSubmit={handleSubmit(onSubmit)}>
+          
+          <div className="flex flex-col gap-1 text-left">
+            <Label className="text-[10px] font-bold text-gray-400 tracking-wide uppercase ml-1">Username</Label>
+            <Input 
+              {...register('name', { required: "Username is required" })} 
+              placeholder="Username"
+              className="rounded-xl border-gray-200 focus-visible:ring-cyan-500 text-sm h-10"
+            />
+            {errors.name && <p className="text-[11px] text-red-500 m-0 ml-1 font-medium">{errors.name.message}</p>}
+          </div>
 
-        <div className={styles.formGroup}>
-          <label>Password:</label>
-          <input 
-            {...register('password', { 
-                required: "Password is required",
+          <div className="flex flex-col gap-1 text-left">
+            <Label className="text-[10px] font-bold text-gray-400 tracking-wide uppercase ml-1">Email Address</Label>
+            <Input 
+              {...register('email', { 
+                required: "Email is required",
                 pattern: {
-                value: /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$/,
-                message: "Password must be 6-20 characters and include both letters and numbers"
-            }
-            })}
-            type="password" 
-            placeholder="Password" 
-          />
-          {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
-        </div>
-        
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Creating Account...' : 'Create Account'}
-        </button>
-        
-        <p>
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email"
+                }
+              })} 
+              type="email" 
+              placeholder="name@example.com"
+              className="rounded-xl border-gray-200 focus-visible:ring-cyan-500 text-sm h-10"
+            />
+            {errors.email && <p className="text-[11px] text-red-500 m-0 ml-1 font-medium">{errors.email.message}</p>}
+          </div>
+
+          <div className="flex flex-col gap-1 text-left">
+            <Label className="text-[10px] font-bold text-gray-400 tracking-wide uppercase ml-1">Password</Label>
+            <div className="relative w-full">
+              <Input 
+                {...register('password', { 
+                  required: "Password is required",
+                  pattern: {
+                    value: /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}$/,
+                    message: "6-20 chars with letters & numbers"
+                  }
+                })}
+                type={showPassword ? "text" : "password"} 
+                placeholder="••••••••"
+                className="rounded-xl border-gray-200 focus-visible:ring-cyan-500 text-sm h-10 pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors bg-transparent border-none p-0 cursor-pointer flex items-center justify-center h-5 w-5"
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+            {errors.password && <p className="text-[11px] text-red-500 m-0 ml-1 font-medium leading-tight">{errors.password.message}</p>}
+          </div>
+          
+          <Button 
+            type="submit" 
+            disabled={isLoading}
+            className="bg-[#f5b813] hover:bg-[#e0a610] text-[#334148] font-bold text-xs h-10 rounded-xl shadow-sm transition-all border-none mt-2 w-full cursor-pointer uppercase tracking-wider"
+          >
+            {isLoading ? 'Creating Account...' : 'Create Account'}
+          </Button>
+          
+          <p className="text-[11px] text-center text-gray-400 mt-2 font-sans m-0">
+            Already have an account?{' '}
+            <Link to="/login" className="text-cyan-500 hover:text-cyan-600 font-bold underline transition-colors">
+              Login
+            </Link>
+          </p>
+        </form>
+
+      </div>
     </div>
   );
 };

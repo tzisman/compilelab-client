@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetStudentExercisesQuery } from '../features/student-exercise/studentExerciseApi';
 import StudentExerciseItem from '../features/student-exercise/StudentExerciseItem';
-import { ClipboardList } from 'lucide-react';
 
 const StudentExerciseList: React.FC = () => {
   const { courseId } = useParams<{ courseId: string }>();
@@ -40,7 +39,6 @@ const StudentExerciseList: React.FC = () => {
       {/* HERO HEADER */}
       <div className="w-full bg-[#334148] text-white pt-10 pb-20 md:pt-14 md:pb-24 px-6 md:px-12 relative border-none flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 shrink-0">
         
-        {/* כותרת רספונסיבית בשורה אחת עם נקודות צידיות */}
         <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 sm:gap-0 w-full">
           <h1 className="text-3xl md:text-4xl font-bold text-[#f5b813] tracking-wide uppercase m-0 leading-none">
             Exercises
@@ -49,7 +47,7 @@ const StudentExerciseList: React.FC = () => {
           <div className="hidden sm:flex items-center">
             <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 mx-4 md:mx-6 shrink-0" />
             <p className="text-sm md:text-base text-gray-300 font-medium tracking-wide m-0 leading-none">
-              Complete the tasks below to improve your coding skills.
+              Review your course curriculum and tasks progress.
             </p>
             <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 mx-4 md:mx-6 shrink-0" />
           </div>
@@ -68,7 +66,7 @@ const StudentExerciseList: React.FC = () => {
       </div>
 
       {/* CONTENT AREA */}
-      <div className="w-full flex-grow px-4 sm:px-6 md:px-12 pb-24 pt-10 sm:pt-12 flex flex-col items-center gap-4 z-10">
+      <div className="w-full flex-grow px-4 sm:px-6 md:px-12 pb-24 pt-8 flex flex-col items-center gap-3 z-10">
         {exercises && exercises.length > 0 ? (
           exercises.map((ex) => (
             <StudentExerciseItem 
@@ -78,12 +76,9 @@ const StudentExerciseList: React.FC = () => {
             />
           ))
         ) : (
-          <div className="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-sm border border-gray-100 p-16 flex flex-col items-center text-center justify-center mx-auto mt-12">
-            <div className="w-20 h-20 rounded-full bg-[#f1f3f4] flex items-center justify-center mb-6 text-cyan-500">
-              <ClipboardList className="h-10 w-10 stroke-[1.3]" />
-            </div>
-            <h2 className="text-2xl font-bold text-[#334148] mb-3">No Exercises Yet</h2>
-            <p className="text-gray-500 text-base max-w-sm">There are no assignments published for this course at the moment.</p>
+          <div className="w-full max-w-2xl bg-white rounded-3xl border border-gray-100 p-12 flex flex-col items-center text-center justify-center mx-auto mt-12">
+            <h2 className="text-xl font-bold text-[#334148] mb-2">No Exercises Found</h2>
+            <p className="text-gray-400 text-sm max-w-sm m-0">There are no tasks published for this course at the moment.</p>
           </div>
         )}
       </div>

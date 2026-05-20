@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar.tsx';
+import Navbar from './components/navbar/Navbar.tsx';
 import Login from './features/auth/Login.tsx';
 import Signup from './features/auth/Signup.tsx';
 import { NotFound, ServerDown, ServerError } from './pages/ErrorPages.tsx';
@@ -13,6 +13,7 @@ import StudentExerciseList from './pages/StudentExerciseList.tsx';
 import ExerciseWorkspace from './features/student-answer/ExerciseWorkspace.tsx';
 
 import Home from './pages/HomePage.tsx';
+import Footer from './components/footer/Footer.tsx';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Footer/>
     </Router>
   );
 }
