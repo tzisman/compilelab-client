@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar.tsx';
 import Login from './features/auth/Login.tsx';
 import Signup from './features/auth/Signup.tsx';
@@ -11,13 +11,86 @@ import LecturerRequestsPage from './pages/LecturerRequestsPage.tsx';
 import CourseReportPage from './features/report/CourseReportPage.tsx';
 import StudentExerciseList from './pages/StudentExerciseList.tsx';
 import ExerciseWorkspace from './features/student-answer/ExerciseWorkspace.tsx';
-
+import { store } from './app/store.ts';
+import { showAlert } from './features/alert/alertSlice.ts';
+import CustomAlert from './features/alert/CustomAlert.tsx';
 import Home from './pages/HomePage.tsx';
 import Footer from './components/footer/Footer.tsx';
+import { useEffect } from 'react';
+
+window.alert = (message: string) => {
+  store.dispatch(showAlert({ message, type: 'info' }));
+};
+
+function TitleUpdater() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+
+    // 1. טיפול בדף הבית
+    if (path === '/') {
+      document.title = 'Home';
+      return;
+    }
+
+    // 2. מיפוי נתיבים קבועים לשמות יפים (תוכל לשנות כאן לאנגלית או עברית)
+    const fixedRoutes: { [key: string]: string } = {
+      'studies': 'My Courses',
+      'instructors': 'Instructors',
+      'requests': 'Lecturer Requests',
+      'login': 'Login',
+      'signup': 'Sign Up',
+      '404': 'Page Not Found',
+      'error-500': 'Server Error',
+      'server-down': 'Server Down',
+      'course-catalog': 'Course Catalog',
+    };
+
+    // נסיר את הסלאש הראשון לבדיקה
+    const cleanPath = path.substring(1);
+
+    // אם זה נתיב קבוע, נשתמש בערך מהמפה
+    if (fixedRoutes[cleanPath]) {
+      document.title = fixedRoutes[cleanPath];
+      return;
+    }
+
+    // 3. טיפול בנתיבים דינמיים עם פרמטרים (כמו exercise/:id או course/:id)
+    if (path.startsWith('/exercise/')) {
+      document.title = 'Exercise Workspace'; 
+      // או אם תרצה לשלב את האיידי: `Exercise #${path.split('/')[2]}`
+      return;
+    }
+    
+    if (path.startsWith('/course/')) {
+      document.title = 'Course Exercises';
+      return;
+    }
+
+    if (path.startsWith('/manage-course/')) {
+      document.title = 'Course Management';
+      return;
+    }
+
+    if (path.endsWith('/report')) {
+      document.title = 'Course Report';
+      return;
+    }
+
+    // ברירת מחדל אם הגענו לנתיב לא מוכר – הופך אות ראשונה לגדולה
+    const fallbackTitle = cleanPath.charAt(0).toUpperCase() + cleanPath.slice(1);
+    document.title = fallbackTitle;
+
+  }, [location]);
+
+  return null;
+}
 
 function App() {
   return (
     <Router>
+      <TitleUpdater />
       <Navbar />
       <main className="pt-20">
         <Routes >
@@ -39,6 +112,7 @@ function App() {
         </Routes>
       </main>
       <Footer/>
+      <CustomAlert />
     </Router>
   );
 }

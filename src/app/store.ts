@@ -5,7 +5,7 @@ import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
 import { logout } from '../features/auth/authSlice';
 import courseReducer from '../features/student-course/courseSlice'; 
-
+import alertReducer from '../features/alert/alertSlice';
 export const globalErrorMiddleware: Middleware = ({ dispatch }) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     const status = (action.payload as { status: number | string })?.status;
@@ -44,6 +44,7 @@ export const store = configureStore({
     
     auth: authReducer,
     course: courseReducer,
+    alert: alertReducer,
   },
   
  
