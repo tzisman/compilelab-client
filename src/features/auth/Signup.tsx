@@ -7,7 +7,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import type { SignupRequest } from '../../types/user.types';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-// Shadcn UI Components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,7 +37,6 @@ const Signup = () => {
   };
 
   return (
-    // שינוי ל-items-start עם pt-16 כדי לקרב את הטופס למעלה
     <div className="w-full h-screen bg-[#334148] flex items-start justify-center p-4 pt-16 sm:pt-20 font-sans select-none overflow-hidden sm:overflow-y-auto">
       <div className="w-full max-w-md bg-white rounded-[1.8rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-6 md:p-8 flex flex-col max-h-[85vh] overflow-y-auto">
         

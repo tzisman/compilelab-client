@@ -19,7 +19,6 @@ const AddExerciseModal: React.FC<Props> = ({ courseId, onClose, onSubmit, isLoad
     <div className="fixed inset-0 z-50 bg-[#334148]/40 backdrop-blur-xs flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl border border-gray-50 p-8 flex flex-col relative animate-in fade-in zoom-in-95 duration-150">
         
-        {/* כפתור סגירה מהיר */}
         <button 
           onClick={onClose} 
           className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
@@ -33,7 +32,6 @@ const AddExerciseModal: React.FC<Props> = ({ courseId, onClose, onSubmit, isLoad
         
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
           
-          {/* שדה שם התרגיל */}
           <div className="flex flex-col gap-1.5 text-left">
             <label className="font-mono text-xs font-bold text-gray-900 uppercase">Exercise Name</label>
             <input 
@@ -43,7 +41,6 @@ const AddExerciseModal: React.FC<Props> = ({ courseId, onClose, onSubmit, isLoad
             />
           </div>
 
-          {/* שדה שפת תכנות */}
           <div className="flex flex-col gap-1.5 text-left">
             <label className="font-mono text-xs font-bold text-gray-900 uppercase">Language</label>
             <div className="relative w-full">
@@ -57,7 +54,6 @@ const AddExerciseModal: React.FC<Props> = ({ courseId, onClose, onSubmit, isLoad
             </div>
           </div>
 
-          {/* שדה תיאור */}
           <div className="flex flex-col gap-1.5 text-left">
             <label className="font-mono text-xs font-bold text-gray-900 uppercase">Description (Optional)</label>
             <textarea 
@@ -68,7 +64,6 @@ const AddExerciseModal: React.FC<Props> = ({ courseId, onClose, onSubmit, isLoad
             />
           </div>
 
-          {/* כפתורי פעולה */}
           <div className="flex justify-end gap-3 mt-4 font-mono text-sm">
             <button 
               type="button" 

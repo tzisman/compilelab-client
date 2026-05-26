@@ -30,16 +30,13 @@ const StudentCoursesList: React.FC = () => {
   return (
     <div className="w-full min-h-screen bg-[#f8f9fa] font-sans select-none overflow-x-hidden m-0 p-0 text-left flex flex-col">
       
-      {/* HERO HEADER */}
       <div className="w-full bg-[#334148] text-white pt-10 pb-20 md:pt-14 md:pb-24 px-6 md:px-12 relative border-none flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 shrink-0">
         
-        {/* Title and sub-content row */}
         <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 sm:gap-0">
           <h1 className="text-3xl md:text-4xl font-bold text-[#f5b813] tracking-wide uppercase m-0 leading-none">
             Studies
           </h1>
           
-          {/* Responsive container: Hidden on mobile, flex row on sm screens and up */}
           <div className="hidden sm:flex items-center">
             <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 mx-4 md:mx-6 shrink-0" />
             <p className="text-sm md:text-base text-gray-300 font-medium tracking-wide m-0 leading-none">
@@ -49,7 +46,6 @@ const StudentCoursesList: React.FC = () => {
           </div>
         </div>
 
-        {/* Updated Button Text to "join a course" */}
         <Button 
           onClick={() => navigate('/course-catalog')}
           className="bg-[#f5b813] hover:bg-[#e0a610] text-[#334148] font-bold px-6 py-2 rounded-xl text-sm tracking-wide shadow-md transition-all cursor-pointer border-none z-10 w-fit mx-auto md:mx-0 h-auto lowercase"
@@ -57,7 +53,6 @@ const StudentCoursesList: React.FC = () => {
           join a course
         </Button>
 
-        {/* WAVE EFFECT */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] -mb-[1px]">
           <svg 
             viewBox="0 0 1200 120" 
@@ -69,7 +64,6 @@ const StudentCoursesList: React.FC = () => {
         </div>
       </div>
 
-      {/* CONTENT AREA */}
       <div className="w-full flex-grow px-4 sm:px-6 md:px-12 pb-24 flex justify-center">
         {isEmpty ? (
           <div className="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-sm border border-gray-100 p-16 flex flex-col items-center text-center justify-center mx-auto mt-20">

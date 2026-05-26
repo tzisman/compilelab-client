@@ -1,4 +1,3 @@
-// src/features/exercises/exerciseApi.ts
 import { apiSlice } from '../../api/apiSlice';
 import type { CodeExercise, TestCase} from '../../types/exercise.types';
 
@@ -15,7 +14,6 @@ export const exerciseApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'TestCases', id: arg }],
     }),
 
-    // 3. הוספת תרגיל חדש
     addExercise: builder.mutation<CodeExercise, Partial<CodeExercise>>({
       query: (newExercise) => ({
         url: '/api/CodeExercise',

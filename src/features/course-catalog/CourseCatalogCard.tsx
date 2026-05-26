@@ -11,7 +11,6 @@ interface CourseCatalogCardProps {
   course: CourseCatalog;
 }
 
-// Complete icons pool matching the teacher card system
 const iconsPool = [
   Icons.Code, Icons.Cpu, Icons.Layers, Icons.Terminal, Icons.Globe, Icons.Award, Icons.Binary, Icons.Database, 
   Icons.Braces, Icons.FolderCode, Icons.FileCode, Icons.Laptop, Icons.Monitor, Icons.Network, Icons.Server, 
@@ -50,7 +49,6 @@ const CourseCatalogCard: React.FC<CourseCatalogCardProps> = ({ course }) => {
     }
   };
 
-  // Select icon component using the identical modulo arithmetic strategy
   const IconComponent = iconsPool[course.id % iconsPool.length] || Icons.Code;
 
   return (

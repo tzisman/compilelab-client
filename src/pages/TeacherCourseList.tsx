@@ -27,10 +27,8 @@ const TeacherCourseList: React.FC = () => {
   return (
     <div className="w-full min-h-screen bg-[#f8f9fa] font-sans select-none overflow-x-hidden m-0 p-0 text-left flex flex-col">
       
-      {/* HERO HEADER */}
       <div className="w-full bg-[#334148] text-white pt-10 pb-20 md:pt-14 md:pb-24 px-6 md:px-12 relative border-none flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 shrink-0">
         
-        {/* כותרת וטקסט נלווה */}
         <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 sm:gap-0">
           <h1 className="text-3xl md:text-4xl font-bold text-[#f5b813] tracking-wide uppercase m-0 leading-none">
             Instruction
@@ -45,7 +43,6 @@ const TeacherCourseList: React.FC = () => {
           </div>
         </div>
 
-        {/* כפתור הוספה מעודכן - קומפקטי ושומר על גודל קבוע (w-fit) */}
         <button 
           onClick={() => setIsModalOpen(true)}
           className="bg-[#f5b813] text-[#334148] font-bold px-6 py-2 rounded-xl text-sm tracking-wide shadow-md hover:bg-[#e0a610] transition-all cursor-pointer z-10 w-fit mx-auto md:mx-0"

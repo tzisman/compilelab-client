@@ -36,7 +36,6 @@ const StudentExerciseList: React.FC = () => {
   return (
     <div className="w-full min-h-screen bg-[#f8f9fa] font-sans select-none overflow-x-hidden m-0 p-0 text-left flex flex-col">
       
-      {/* HERO HEADER */}
       <div className="w-full bg-[#334148] text-white pt-10 pb-20 md:pt-14 md:pb-24 px-6 md:px-12 relative border-none flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 shrink-0">
         
         <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 sm:gap-0 w-full">
@@ -53,7 +52,6 @@ const StudentExerciseList: React.FC = () => {
           </div>
         </div>
 
-        {/* WAVE EFFECT */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] -mb-[1px]">
           <svg 
             viewBox="0 0 1200 120" 
@@ -65,7 +63,6 @@ const StudentExerciseList: React.FC = () => {
         </div>
       </div>
 
-      {/* CONTENT AREA */}
       <div className="w-full flex-grow px-4 sm:px-6 md:px-12 pb-24 pt-8 flex flex-col items-center gap-3 z-10">
         {exercises && exercises.length > 0 ? (
           exercises.map((ex) => (

@@ -4,34 +4,28 @@ const Home = () => {
   return (
     <div className="w-full min-h-screen bg-white font-sans select-none overflow-x-hidden m-0 p-0">
       
-      {/* 1. HERO SECTION (Dark Top Area with Deeper & Taller Waves) */}
       <div className="w-full bg-[#334148] text-white pt-20 pb-36 px-4 flex flex-col items-center text-center relative">
         
-        {/* Title */}
         <h1 className="text-3xl md:text-5xl font-bold text-[#f5b813] tracking-wide mb-5 uppercase">
           Welcome to compilelab!
         </h1>
 
-        {/* Cyan Dots */}
         <div className="flex gap-4 mb-6">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
           ))}
         </div>
 
-        {/* Description */}
         <p className="max-w-2xl text-base md:text-xl text-gray-200 font-medium leading-relaxed mb-12">
           The advanced platform for teachers and students to track and manage coding exercises
         </p>
 
-        {/* Central Top Icons */}
         <div className="flex gap-16 justify-center items-center text-cyan-400 mb-2">
           <Monitor className="h-12 w-12 stroke-[1.5]" />
           <NotebookPen className="h-12 w-12 stroke-[1.5]" />
           <Users className="h-12 w-12 stroke-[1.5]" />
         </div>
 
-        {/* --- CLEAN, TALL & DEEP WAVE (FIXED FOR GREY LINE) --- */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] -mb-[1px]">
           <svg 
             viewBox="0 0 1200 120" 
@@ -52,15 +46,12 @@ const Home = () => {
       </div>
 
 
-      {/* 2. FEATURES SECTION (Full-width alternating blocks) */}
       <div className="w-full flex flex-col">
 
-        {/* BLOCK 1: Organized Workflow (PURE WHITE BACKGROUND) */}
-        {/* שינינו מ-py-20 ל-pt-32 pb-20 כדי להרחיק את התוכן מהגלים למעלה */}
+
         <div className="w-full bg-white pt-32 pb-20 px-6">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
             
-            {/* Left Box: Icon and Title */}
             <div className="flex flex-col items-center text-center md:w-1/3">
               <Network className="h-24 w-24 text-black stroke-[1.1] mb-4" />
               <h3 className="text-2xl font-bold text-[#f5b813] tracking-wide leading-tight">
@@ -68,29 +59,23 @@ const Home = () => {
               </h3>
             </div>
             
-            {/* Vertical Cyan Line */}
             <div className="hidden md:block w-[2px] h-36 bg-cyan-400 self-center" />
 
-            {/* Right Box: Text content */}
             <div className="text-center md:text-left md:w-3/5 text-gray-700 text-base md:text-lg leading-relaxed font-medium">
               Courses and assignments are clearly structured, making it easy to manage tasks and follow progress. Both instructors and students always know what is required and what comes next.
             </div>
           </div>
         </div>
 
-        {/* BLOCK 2: Automatic Code Checking (LIGHT GREY BACKGROUND) */}
         <div className="w-full bg-[#f8f9fa] border-y border-gray-100 py-20 px-6">
           <div className="max-w-5xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
             
-            {/* Left Box: Text content */}
             <div className="text-center md:text-right md:w-3/5 text-gray-700 text-base md:text-lg leading-relaxed font-medium">
               Submitted code is tested automatically using predefined cases. Students receive fast feedback, while instructors save time on manual evaluation.
             </div>
 
-            {/* Vertical Cyan Line */}
             <div className="hidden md:block w-[2px] h-36 bg-cyan-400 self-center" />
 
-            {/* Right Box: Icon and Title */}
             <div className="flex flex-col items-center text-center md:w-1/3">
               <ClipboardCheck className="h-24 w-24 text-cyan-500 stroke-[1.1] mb-4" />
               <h3 className="text-2xl font-bold text-[#f5b813] tracking-wide leading-tight">
@@ -100,11 +85,9 @@ const Home = () => {
           </div>
         </div>
 
-        {/* BLOCK 3: Progress Overview (PURE WHITE BACKGROUND) */}
         <div className="w-full bg-white py-20 px-6">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
             
-            {/* Left Box: Icon and Title */}
             <div className="flex flex-col items-center text-center md:w-1/3">
               <TrendingUp className="h-24 w-24 text-black stroke-[1.1] mb-4" />
               <h3 className="text-2xl font-bold text-[#f5b813] tracking-wide leading-tight">
@@ -112,10 +95,8 @@ const Home = () => {
               </h3>
             </div>
 
-            {/* Vertical Cyan Line */}
             <div className="hidden md:block w-[2px] h-36 bg-cyan-400 self-center" />
 
-            {/* Right Box: Text content */}
             <div className="text-center md:text-left md:w-3/5 text-gray-700 text-base md:text-lg leading-relaxed font-medium">
               The platform provides clear summaries of student performance. Instructors can quickly see progress, results, and overall course status.
             </div>
@@ -124,7 +105,6 @@ const Home = () => {
 
       </div>
 
-      {/* Spacing at the very bottom of the page */}
       <div className="h-16" />
     </div>
   );

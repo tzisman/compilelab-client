@@ -13,7 +13,6 @@ const TeacherCourseManagementPage: React.FC = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  // Fetch courses to find the current course name from cache
   const { data: courses } = useGetTeacherCoursesQuery();
   const currentCourse = courses?.find(c => c.id === courseId);
 

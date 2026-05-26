@@ -10,13 +10,11 @@ interface StudentExerciseItemProps {
 const StudentExerciseItem: React.FC<StudentExerciseItemProps> = ({ exercise, onEnter }) => {
   const hasGrade = exercise.grade !== null && exercise.grade !== undefined;
   
-  // חישוב אחוז מדויק לפס ההתקדמות (אם אין ציון, הפס על 0)
   const progressPercentage = hasGrade ? Math.min(Math.max(exercise.grade!, 0), 100) : 0;
 
   return (
     <div className="w-full max-w-4xl bg-white rounded-[1.8rem] shadow-[0_12px_30px_rgba(0,0,0,0.04)] border border-gray-100/70 p-6 md:p-8 flex flex-col items-center text-center sm:grid sm:grid-cols-3 sm:items-center sm:text-left gap-6 hover:shadow-[0_16px_35px_rgba(0,0,0,0.06)] transition-all group">
       
-      {/* שמאל: שם התרגיל והתגית - ממורכז בנייד, מיושר לשמאל במסך רחב */}
       <div className="flex flex-col items-center sm:items-start gap-2 min-w-0 w-full">
         <h4 className="text-xl md:text-2xl font-bold text-cyan-500 tracking-wide m-0 font-sans truncate w-full">
           {exercise.name}
@@ -26,7 +24,6 @@ const StudentExerciseItem: React.FC<StudentExerciseItemProps> = ({ exercise, onE
         </span>
       </div>
 
-      {/* מרכז: כפתור הפעולה - תמיד ממורכז באופן מושלם */}
       <div className="flex justify-center w-full">
         <Button 
           onClick={() => onEnter(exercise.id)}
@@ -36,14 +33,11 @@ const StudentExerciseItem: React.FC<StudentExerciseItemProps> = ({ exercise, onE
         </Button>
       </div>
 
-      {/* ימין: בלוק הציון ופס הפרוגרס - ממורכז בנייד, מיושר לימין במסך רחב */}
       <div className="flex flex-col items-center sm:items-end gap-2 w-full min-w-[160px] font-sans">
-        {/* כיתוב הציון בצבע טורקיז אחיד */}
         <span className="text-xl font-bold tracking-wide m-0 leading-none text-cyan-500 font-sans">
           Mark: {hasGrade ? exercise.grade : '--'}
         </span>
         
-        {/* פס פרוגרס המתמלא בדיוק לפי מספר הציון */}
         <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden mt-1 max-w-[200px] sm:max-w-none">
           <div 
             className="h-full bg-cyan-500 rounded-full transition-all duration-500 ease-out"

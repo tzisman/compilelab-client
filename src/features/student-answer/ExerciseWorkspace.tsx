@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Save, Play, Info } from 'lucide-react';
+import { ArrowLeft, Save, Play, Info, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 const ExerciseWorkspace: React.FC = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
@@ -21,10 +21,12 @@ const ExerciseWorkspace: React.FC = () => {
   
   const userInCourseId = useSelector((state: RootState) => state.course.currentInCourseId);
 
+  // 1. שליפת פרטי התרגיל
   const { data: exercise, isLoading: isExLoading } = useGetStudentExerciseByIdQuery(exId);
 
-  const { data: existingAnswer, isLoading: isAnsLoading } = useGetStudentAnswerByIdQuery(
-    exercise?.studentAnswerId!, 
+  // 2. שליפת התשובה הקיימת
+  const { data: existingAnswer, isSuccess: isAnsSuccess } = useGetStudentAnswerByIdQuery(
+    exercise?.studentAnswerId ?? 0, 
     { skip: !exercise?.studentAnswerId }
   );
 
@@ -33,15 +35,23 @@ const ExerciseWorkspace: React.FC = () => {
   const [updateAnswer, { isLoading: isUpdating }] = useUpdateStudentAnswerMutation();
   const [getMark, { data: markData, isLoading: isMarking }] = useGetStudentMarkMutation();
 
+  // טעינת הקוד של הסטודנט לעורך
   useEffect(() => {
-    if (existingAnswer?.answerCode) {
+    if (isAnsSuccess && existingAnswer?.answerCode) {
       setCode(existingAnswer.answerCode);
     }
-  }, [existingAnswer]);
+  }, [isAnsSuccess, existingAnswer]);
 
+  // חישוב הציון הדינמי להצגה
   const displayGrade = markData ? markData.mark : exercise?.grade;
   const hasGrade = displayGrade !== null && displayGrade !== undefined;
   const progressPercentage = hasGrade ? Math.min(Math.max(displayGrade, 0), 100) : 0;
+
+  // חיבור דינמי של השגיאות לפי ה-Interface המדויק (AnswerMark)
+  const hasError = markData?.typeError || markData?.errorMessage;
+  const errorMessageToShow = hasError 
+    ? `${markData.typeError ? `[${markData.typeError}] ` : ''}${markData.errorMessage || ''}`
+    : '';
 
   const onSave = async () => {
     if (!exercise || !userInCourseId) return;
@@ -64,7 +74,7 @@ const ExerciseWorkspace: React.FC = () => {
     }
   };
 
-  if (isExLoading || isAnsLoading) {
+  if (isExLoading) {
     return (
       <div className="w-full min-h-screen bg-[#f8f9fa] flex items-center justify-center font-sans">
         <div className="text-xl font-bold text-gray-600 animate-pulse">Loading workspace...</div>
@@ -92,11 +102,11 @@ const ExerciseWorkspace: React.FC = () => {
           </div>
         </div>
 
-        {/* תצוגת ציון נוכחית עליונה בטורקיז */}
+        {/* תצוגת ציון נוכחית עליונה */}
         <div className="flex items-center gap-2 bg-gray-800/30 px-4 py-1.5 rounded-full border border-gray-700/50">
           <span className="text-xs text-gray-400 font-medium">Current Mark:</span>
           <span className="text-sm font-bold text-cyan-400">
-            {exercise?.grade !== null && exercise?.grade !== undefined ? `${exercise.grade}/100` : '--'}
+            {hasGrade ? `${displayGrade}/100` : '--'}
           </span>
         </div>
       </div>
@@ -104,9 +114,9 @@ const ExerciseWorkspace: React.FC = () => {
       {/* 2. MAIN WORKSPACE CONTAINER */}
       <div className="w-full flex-grow flex flex-col lg:flex-row p-4 sm:p-6 gap-6 min-h-0">
         
-        {/* צד שמאל: כרטיסייה אחת מאוחדת ומאורגנת להפליא */}
+        {/* צד שמאל: פרטי המטלה, ציון, ופידבק שגיאות */}
         <div className="w-full lg:w-[380px] shrink-0 flex flex-col">
-          <div className="bg-white rounded-[1.8rem] shadow-[0_12px_30px_rgba(0,0,0,0.02)] border border-gray-100 p-6 flex flex-col h-full justify-between">
+          <div className="bg-white rounded-[1.8rem] shadow-[0_12px_30px_rgba(0,0,0,0.02)] border border-gray-100 p-6 flex flex-col h-full justify-between overflow-y-auto">
             
             {/* חלק עליון: פרטי המטלה והתיאור */}
             <div className="flex flex-col flex-grow">
@@ -119,13 +129,13 @@ const ExerciseWorkspace: React.FC = () => {
                 </span>
               </div>
               
-              <div className="text-sm text-gray-600 font-sans leading-relaxed m-0 whitespace-pre-line bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50 overflow-y-auto max-h-[320px]">
+              <div className="text-sm text-gray-600 font-sans leading-relaxed m-0 whitespace-pre-line bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50 overflow-y-auto max-h-[280px]">
                 {exercise?.description || 'No description provided for this challenge.'}
               </div>
             </div>
 
-            {/* חלק תחתון: אזור הציון והפידבק - מופרד בקו עדין ומיושר בדיוק כמו שורות התרגילים */}
-            <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col gap-4">
+            {/* חלק תחתון: אזור הציון, פידבק, ופרטי אי-הצלחה */}
+            <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col gap-4 shrink-0">
               {hasGrade ? (
                 <div className="flex flex-col gap-3 font-sans w-full">
                   <div className="flex justify-between items-end w-full">
@@ -137,7 +147,7 @@ const ExerciseWorkspace: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* פס פרוגרס מדויק ואחיד לקו העיצובי */}
+                  {/* פס פרוגרס אחיד בצבע הציאן של הפרויקט */}
                   <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden mt-1">
                     <div 
                       className="h-full bg-cyan-500 rounded-full transition-all duration-500 ease-out"
@@ -145,11 +155,32 @@ const ExerciseWorkspace: React.FC = () => {
                     />
                   </div>
 
-                  {/* הערת המרצה/מערכת אם קיימת */}
+                  {/* 1. הערת המרצה/מערכת הכללית אם קיימת */}
                   {markData?.remark && (
                     <div className="bg-cyan-50/20 rounded-xl p-3 border border-cyan-100/30 mt-1">
                       <span className="text-[9px] font-bold uppercase text-cyan-600 block mb-0.5 font-mono">Feedback:</span>
                       <p className="text-xs text-gray-600 m-0 leading-relaxed font-sans">{markData.remark}</p>
+                    </div>
+                  )}
+
+                  {/* 2. אזור פרטי אי-הצלחה (קופסת פלט בעיצוב קו הפרויקט - מונע אדום) */}
+                  {displayGrade < 100 && hasError && (
+                    <div className="bg-gray-50/80 rounded-xl p-3.5 border border-gray-200/60 mt-2 flex flex-col gap-1.5 animate-fadeIn">
+                      <div className="flex items-center gap-1.5 text-[#334148] font-mono text-[10px] font-bold uppercase tracking-wider">
+                        <AlertCircle className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                        <span>Execution & Test Failures:</span>
+                      </div>
+                      <div className="text-xs text-gray-700 font-mono bg-white p-2.5 rounded-lg border border-gray-100 overflow-x-auto max-h-[150px] whitespace-pre-wrap leading-normal">
+                        {errorMessageToShow}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* הודעת הצלחה מלאה בציון 100 (בעיצוב קו הציאן של הפרויקט) */}
+                  {displayGrade === 100 && (
+                    <div className="bg-cyan-50/20 rounded-xl p-3 border border-cyan-100/30 mt-1 flex items-center gap-2 text-cyan-700 text-xs font-medium">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-500 shrink-0" />
+                      <span>All tests passed successfully! Perfect solution.</span>
                     </div>
                   )}
                 </div>
@@ -166,7 +197,7 @@ const ExerciseWorkspace: React.FC = () => {
           </div>
         </div>
 
-        {/* צד ימין: עורך הקוד (IDE Workspace) - נשאר ללא שינוי כיוון שאהבת אותו */}
+        {/* צד ימין: עורך הקוד (IDE Workspace) */}
         <div className="flex-grow flex flex-col bg-white rounded-[1.8rem] shadow-[0_12px_30px_rgba(0,0,0,0.02)] border border-gray-100 overflow-hidden min-h-[450px]">
           
           <div className="w-full bg-gray-50/70 border-b border-gray-100 px-6 py-3.5 flex flex-row items-center justify-between shrink-0 gap-4">
@@ -186,7 +217,7 @@ const ExerciseWorkspace: React.FC = () => {
               
               <Button 
                 disabled={!exercise?.studentAnswerId || isMarking} 
-                onClick={() => getMark(exercise?.studentAnswerId!)}
+                onClick={() => getMark(exercise?.studentAnswerId ?? 0)}
                 className="bg-[#f5b813] hover:bg-[#e0a610] text-[#334148] font-bold text-xs rounded-full px-5 h-9 shadow-sm transition-all border-none cursor-pointer"
               >
                 <Play className="h-3.5 w-3.5 mr-1.5 fill-current" />

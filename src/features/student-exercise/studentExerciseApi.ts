@@ -1,4 +1,3 @@
-// src/features/exercises/studentExerciseApi.ts
 import { apiSlice } from '../../api/apiSlice';
 import type { StudentExercise } from '../../types/studentExercise.types';
 

@@ -105,19 +105,19 @@ const ExerciseAccordionItem: React.FC<Props> = ({ exercise }) => {
           ) : (
             <div className="w-full flex flex-col gap-4">
               
-              {/* TABLE */}
-              <div className="w-full overflow-hidden border border-gray-100 rounded-2xl bg-white shadow-2xs">
-                <table className="w-full border-collapse text-left text-sm">
+              {/* TABLE CONTAINER WITH SCROLL */}
+              <div className="w-full overflow-x-auto border border-gray-100 rounded-2xl bg-white shadow-2xs">
+                <table className="w-full border-collapse text-left text-sm min-w-[600px]">
                   <thead>
                     <tr className="bg-gray-50 border-b border-gray-100 font-mono text-gray-500 text-xs uppercase">
-                      <th className="p-4 font-bold">Input</th>
-                      <th className="p-4 font-bold">Expected Output</th>
-                      <th className="p-4 font-bold text-center w-32">Actions</th>
+                      <th className="p-4 font-bold min-w-[200px]">Input</th>
+                      <th className="p-4 font-bold min-w-[200px]">Expected Output</th>
+                      <th className="p-4 font-bold text-center w-28 sticky right-0 bg-gray-50 shadow-[-10px_0_10px_-5px_rgba(0,0,0,0.03)]">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50 font-mono text-xs text-gray-700">
                     {testCases?.map((tc) => (
-                      <tr key={tc.id} className="hover:bg-gray-50/50 transition-colors">
+                      <tr key={tc.id} className="hover:bg-gray-50/50 transition-colors group">
                         {editingId === tc.id ? (
                           <>
                             <td className="p-3">
@@ -134,18 +134,30 @@ const ExerciseAccordionItem: React.FC<Props> = ({ exercise }) => {
                                 onChange={(e) => setEditOutput(e.target.value)} 
                               />
                             </td>
-                            <td className="p-3 flex items-center justify-center gap-2">
-                              <button onClick={() => handleUpdate(tc)} className="p-1.5 text-green-500 hover:bg-green-50 rounded-md transition-all cursor-pointer"><Check className="h-4 w-4" /></button>
-                              <button onClick={() => setEditingId(null)} className="p-1.5 text-gray-400 hover:bg-gray-100 rounded-md transition-all cursor-pointer"><X className="h-4 w-4" /></button>
+                            <td className="p-3 text-center sticky right-0 bg-white group-hover:bg-gray-50/50 shadow-[-10px_0_10px_-5px_rgba(0,0,0,0.03)]">
+                              <div className="flex items-center justify-center gap-1.5">
+                                <button onClick={() => handleUpdate(tc)} className="p-1.5 text-green-500 hover:bg-green-50 rounded-md transition-all cursor-pointer"><Check className="h-4 w-4" /></button>
+                                <button onClick={() => setEditingId(null)} className="p-1.5 text-gray-400 hover:bg-gray-100 rounded-md transition-all cursor-pointer"><X className="h-4 w-4" /></button>
+                              </div>
                             </td>
                           </>
                         ) : (
                           <>
-                            <td className="p-4"><code className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold">{tc.input}</code></td>
-                            <td className="p-4"><code className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold">{tc.output}</code></td>
-                            <td className="p-4 flex items-center justify-center gap-3">
-                              <button onClick={() => startEditing(tc)} className="p-1.5 text-gray-400 hover:text-cyan-500 hover:bg-cyan-50/50 rounded-lg transition-all cursor-pointer"><Pencil className="h-3.5 w-3.5" /></button>
-                              <button onClick={() => handleDelete(tc.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all cursor-pointer"><Trash2 className="h-3.5 w-3.5" /></button>
+                            <td className="p-4 max-w-xs sm:max-w-md overflow-hidden text-ellipsis whitespace-nowrap">
+                              <code className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold inline-block max-w-full overflow-x-auto scrollbar-none">
+                                {tc.input}
+                              </code>
+                            </td>
+                            <td className="p-4 max-w-xs sm:max-w-md overflow-hidden text-ellipsis whitespace-nowrap">
+                              <code className="bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold inline-block max-w-full overflow-x-auto scrollbar-none">
+                                {tc.output}
+                              </code>
+                            </td>
+                            <td className="p-4 text-center sticky right-0 bg-white group-hover:bg-[#fcfdfe] shadow-[-10px_0_10px_-5px_rgba(0,0,0,0.03)] transition-colors">
+                              <div className="flex items-center justify-center gap-2">
+                                <button onClick={() => startEditing(tc)} className="p-1.5 text-gray-400 hover:text-cyan-500 hover:bg-cyan-50/50 rounded-lg transition-all cursor-pointer"><Pencil className="h-3.5 w-3.5" /></button>
+                                <button onClick={() => handleDelete(tc.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all cursor-pointer"><Trash2 className="h-3.5 w-3.5" /></button>
+                              </div>
                             </td>
                           </>
                         )}
@@ -172,7 +184,7 @@ const ExerciseAccordionItem: React.FC<Props> = ({ exercise }) => {
                 <button 
                   onClick={handleAddTest}
                   disabled={isAdding || !newInput.trim() || !newOutput.trim()}
-                  className="flex items-center gap-1 bg-[#f5b813] text-white font-mono text-xs font-bold px-5 py-2 rounded-xl hover:bg-[#e0a610] transition-all disabled:opacity-40 disabled:cursor-not-allowed shrink-0 cursor-pointer shadow-2xs"
+                  className="flex items-center gap-1 bg-[#f5b813] text-[#334148] font-mono text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-[#e0a610] transition-all disabled:opacity-40 disabled:cursor-not-allowed shrink-0 cursor-pointer shadow-2xs border-none"
                 >
                   <Plus className="h-3.5 w-3.5 stroke-[2.5]" /> Add
                 </button>

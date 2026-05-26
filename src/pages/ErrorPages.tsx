@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Compass, ServerCrash, WifiOff } from 'lucide-react';
 
-// קומפוננטת מעטפת (Layout) פנימית השומרת על הפינות המעוגלות והמיקום הגבוה במסך
 const ErrorLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="w-full h-screen bg-[#334148] flex items-start justify-center p-4 pt-20 sm:pt-28 font-sans select-none overflow-hidden">
     <div className="w-full max-w-md bg-white rounded-[1.8rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-8 md:p-10 flex flex-col items-center text-center max-h-[85vh] overflow-y-auto">
@@ -11,10 +10,8 @@ const ErrorLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </div>
 );
 
-// 1. עמוד שגיאה 404 - דף לא נמצא
 export const NotFound = () => (
   <ErrorLayout>
-    {/* אייקון מצפן מעודן בתוך עיגול טורקיז עדין */}
     <div className="w-16 h-16 bg-cyan-50 text-cyan-500 rounded-full flex items-center justify-center mb-4 shrink-0">
       <Compass className="h-8 w-8 stroke-[1.5]" />
     </div>
@@ -36,10 +33,8 @@ export const NotFound = () => (
   </ErrorLayout>
 );
 
-// 2. עמוד שגיאה 500 - שגיאת שרת פנימית
 export const ServerError = () => (
   <ErrorLayout>
-    {/* אייקון קריסת שרת */}
     <div className="w-16 h-16 bg-cyan-50 text-cyan-500 rounded-full flex items-center justify-center mb-4 shrink-0">
       <ServerCrash className="h-8 w-8 stroke-[1.5]" />
     </div>
@@ -61,10 +56,8 @@ export const ServerError = () => (
   </ErrorLayout>
 );
 
-// 3. עמוד שגיאה - אין חיבור לשרת (Backend לא רץ)
 export const ServerDown = () => (
   <ErrorLayout>
-    {/* אייקון ניתוק רשת */}
     <div className="w-16 h-16 bg-cyan-50 text-cyan-500 rounded-full flex items-center justify-center mb-4 shrink-0">
       <WifiOff className="h-8 w-8 stroke-[1.5]" />
     </div>

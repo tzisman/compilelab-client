@@ -7,7 +7,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import type { LoginRequest } from '../../types/user.types';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-// Shadcn UI Components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

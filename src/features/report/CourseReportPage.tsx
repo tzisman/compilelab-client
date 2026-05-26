@@ -70,7 +70,6 @@ const CourseReportPage: React.FC = () => {
   return (
     <div className="w-full min-h-screen bg-[#f8f9fa] font-sans flex flex-col select-none overflow-x-hidden">
       
-      {/* Hero Header */}
       <div className="w-full bg-[#334148] text-white pt-10 pb-24 px-6 md:px-12 relative flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0 shrink-0">
         
         <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
@@ -98,7 +97,6 @@ const CourseReportPage: React.FC = () => {
           <Download className="h-4 w-4 stroke-[2.5]" /> Export to Excel
         </button>
 
-        {/* Wave Effect */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] -mb-[1px]">
           <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[45px] sm:h-[60px] md:h-[75px] text-[#f8f9fa] fill-current">
             <path d="M0,60 C100,10 140,110 240,60 C340,10 380,110 480,60 C580,10 620,110 720,60 C820,10 860,110 960,60 C1060,10 1120,110 1200,60 L1200,125 L0,125 Z" />
@@ -106,10 +104,8 @@ const CourseReportPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Content Area */}
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pb-24 pt-12 z-10">
         
-        {/* Accessible Table Wrapper */}
         <div 
           className="w-full overflow-x-auto border border-gray-100 rounded-[2rem] bg-white shadow-sm"
           role="region" 
@@ -135,12 +131,10 @@ const CourseReportPage: React.FC = () => {
 
                 return (
                   <tr key={student.studentId} className="hover:bg-gray-50/40 transition-colors">
-                    {/* Sticky Student Name Column */}
                     <td className="p-5 font-sans font-bold text-gray-900 sticky left-0 bg-white z-10 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
                       {student.studentName}
                     </td>
                     
-                    {/* Exercise Grades Columns */}
                     {student.exercises.map((ex, idx) => (
                       <td key={idx} className="p-3 text-center">
                         <span className={`inline-block px-3 py-1.5 rounded-xl w-14 text-center ${getGradeStyle(ex.grade)}`}>
@@ -149,7 +143,6 @@ const CourseReportPage: React.FC = () => {
                       </td>
                     ))}
                     
-                    {/* Average Column */}
                     <td className="p-5 text-center font-bold text-gray-900 bg-gray-50/30">
                       {avg}
                     </td>

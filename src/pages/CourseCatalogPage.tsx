@@ -77,7 +77,6 @@ const CourseCatalogPage: React.FC = () => {
         </div>
       </div>
 
-      {/* CONTENT AREA */}
       <div className="w-full flex-grow px-4 sm:px-6 md:px-12 pb-24 flex flex-col items-center">
         
         {isFetching && (
@@ -96,14 +95,12 @@ const CourseCatalogPage: React.FC = () => {
           </div>
         ) : (
           <div className="w-full flex flex-col items-center">
-            {/* Catalog Grid layout */}
             <div className="w-full pt-10 sm:pt-12 grid grid-cols-[repeat(auto-fit,300px)] gap-6 justify-center items-start">
               {allCourses.map((course) => (
                 <CourseCatalogCard key={course.id} course={course} />
               ))}
             </div>
 
-            {/* Custom Pagination Buttons */}
             <div className="flex items-center gap-4 mt-16 bg-white border border-gray-100 px-4 py-2 rounded-full shadow-sm text-xs font-mono text-gray-500 font-bold">
               <Button
                 disabled={page === 1}

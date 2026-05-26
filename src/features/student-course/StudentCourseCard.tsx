@@ -11,7 +11,6 @@ interface StudentCourseCardProps {
   course: StudentCourseDisplay;
 }
 
-// Complete icons pool matching the global design system
 const iconsPool = [
   Icons.Code, Icons.Cpu, Icons.Layers, Icons.Terminal, Icons.Globe, Icons.Award, Icons.Binary, Icons.Database, 
   Icons.Braces, Icons.FolderCode, Icons.FileCode, Icons.Laptop, Icons.Monitor, Icons.Network, Icons.Server, 
@@ -42,7 +41,6 @@ const CourseCard: React.FC<StudentCourseCardProps> = ({ course }) => {
     navigate(`/course/${course.courseId}`);
   };
 
-  // Select dynamic icon using the identical modulo arithmetic strategy (using course.courseId or course.id)
   const IconComponent = iconsPool[course.courseId % iconsPool.length] || Icons.Code;
 
   return (
@@ -50,7 +48,6 @@ const CourseCard: React.FC<StudentCourseCardProps> = ({ course }) => {
       
       <div className="flex justify-between items-start w-full gap-3">
         <div className="flex flex-col min-w-0 flex-1">
-          {/* Forced fixed height container with line-clamp to align cards layout perfectly */}
           <div className="h-14 flex items-start">
             <h3 className="text-xl font-extrabold text-[#334148] tracking-tight capitalize m-0 font-sans group-hover:text-cyan-500 transition-colors line-clamp-2 overflow-hidden text-ellipsis">
               {course.courseName}
@@ -58,7 +55,6 @@ const CourseCard: React.FC<StudentCourseCardProps> = ({ course }) => {
           </div>
         </div>
         
-        {/* Border dashed effect with the exact same icon layout structure */}
         <div className="p-2.5 rounded-full bg-transparent text-cyan-500 border border-dashed border-cyan-400 shrink-0 flex items-center justify-center">
           <IconComponent className="h-5 w-5 stroke-[1.5]" />
         </div>

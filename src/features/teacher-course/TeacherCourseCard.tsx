@@ -54,12 +54,10 @@ const TeacherCourseCard: React.FC<CourseCardProps> = ({ course }) => {
   return (
     <div className="w-[300px] bg-white rounded-[2.5rem] shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-gray-50 p-8 flex flex-col items-center transition-all hover:scale-[1.03] hover:shadow-[0_25px_45px_rgba(0,0,0,0.1)]">
       
-      {/* Dynamic Icon Wrapper */}
       <div className="w-16 h-16 rounded-full bg-[#f8f9fa] border-2 border-dashed border-cyan-400 flex items-center justify-center mb-4 text-[#334148]">
         <IconComponent className="h-7 w-7 stroke-[1.5]" />
       </div>
 
-      {/* Course Title Section */}
       {isEditing ? (
         <div className="w-full flex flex-col items-center gap-2 mb-4">
           <input 
@@ -68,7 +66,6 @@ const TeacherCourseCard: React.FC<CourseCardProps> = ({ course }) => {
             onChange={(e) => setNewName(e.target.value)} 
             autoFocus
           />
-          {/* כפתורי שמירה וביטול מעודכנים לצבעי המותג האחידים */}
           <div className="flex gap-4 text-xs font-bold mt-1 font-mono">
             <button 
               onClick={handleUpdate} 
@@ -99,7 +96,6 @@ const TeacherCourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </div>
       )}
 
-      {/* Statistics Block */}
       <div className="w-full flex flex-col gap-3 font-mono text-sm mb-8 px-4">
         <div className="flex justify-between items-center">
           <span className="font-bold text-gray-900">students</span>
@@ -111,7 +107,6 @@ const TeacherCourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </div>
       </div>
 
-      {/* Open Button */}
       {!isEditing && (
         <button 
           className="bg-[#f5b813] text-white font-mono text-sm px-8 py-1.5 rounded-full hover:bg-[#e0a610] shadow-sm transition-all mt-auto cursor-pointer"

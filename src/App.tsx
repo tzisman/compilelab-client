@@ -28,13 +28,11 @@ function TitleUpdater() {
   useEffect(() => {
     const path = location.pathname;
 
-    // 1. טיפול בדף הבית
     if (path === '/') {
       document.title = 'Home';
       return;
     }
 
-    // 2. מיפוי נתיבים קבועים לשמות יפים (תוכל לשנות כאן לאנגלית או עברית)
     const fixedRoutes: { [key: string]: string } = {
       'studies': 'My Courses',
       'instructors': 'Instructors',
@@ -47,19 +45,15 @@ function TitleUpdater() {
       'course-catalog': 'Course Catalog',
     };
 
-    // נסיר את הסלאש הראשון לבדיקה
     const cleanPath = path.substring(1);
 
-    // אם זה נתיב קבוע, נשתמש בערך מהמפה
     if (fixedRoutes[cleanPath]) {
       document.title = fixedRoutes[cleanPath];
       return;
     }
 
-    // 3. טיפול בנתיבים דינמיים עם פרמטרים (כמו exercise/:id או course/:id)
     if (path.startsWith('/exercise/')) {
       document.title = 'Exercise Workspace'; 
-      // או אם תרצה לשלב את האיידי: `Exercise #${path.split('/')[2]}`
       return;
     }
     
@@ -78,7 +72,6 @@ function TitleUpdater() {
       return;
     }
 
-    // ברירת מחדל אם הגענו לנתיב לא מוכר – הופך אות ראשונה לגדולה
     const fallbackTitle = cleanPath.charAt(0).toUpperCase() + cleanPath.slice(1);
     document.title = fallbackTitle;
 
