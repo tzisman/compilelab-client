@@ -42,10 +42,14 @@ const CourseCatalogCard: React.FC<CourseCatalogCardProps> = ({ course }) => {
 
     try {
       await joinCourse({ id: 0, userId: lecturerId, courseId: course.id, message: data.message }).unwrap();
-      setIsModalOpen(false);
       alert('Request sent successfully!');
-    } catch (err) {
-      alert('Failed to join course: ' + err);
+      setIsModalOpen(false);
+    } catch (err: any) {
+      if (err?.status === 409 || err?.response?.status === 409) {
+        alert("You have already registered for this course.");
+      } else {
+        alert('Failed to join course: ' + (err?.data?.message || err?.message || err));
+      }
     }
   };
 
@@ -64,7 +68,6 @@ const CourseCatalogCard: React.FC<CourseCatalogCardProps> = ({ course }) => {
             </div>
           </div>
           
-          {/* Circular dashed container holding the dynamic icon pool component */}
           <div className="p-2.5 rounded-full bg-transparent text-cyan-500 border border-dashed border-cyan-400 shrink-0 flex items-center justify-center">
             <IconComponent className="h-5 w-5 stroke-[1.5]" />
           </div>

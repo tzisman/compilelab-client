@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { CourseCatalog } from '../../types/courseCatalog.types';
 import { 
@@ -15,11 +15,24 @@ interface JoinCourseModalProps {
   course: CourseCatalog;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { message: string }) => void;
+  onSubmit: (data: { message: string }) => Promise<void> | void;
 }
 
 const JoinCourseModal: React.FC<JoinCourseModalProps> = ({ course, isOpen, onClose, onSubmit }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<{ message: string }>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleFormSubmit = async (data: { message: string }) => {
+    setIsLoading(true);
+    try {
+      await onSubmit(data);
+      onClose();
+    } catch (error) {
+      // Caught successfully - the error message is displayed via alert in the parent component
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -34,15 +47,16 @@ const JoinCourseModal: React.FC<JoinCourseModalProps> = ({ course, isOpen, onClo
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 mt-4">
           <div className="flex flex-col gap-1">
             <textarea
               {...register('message', { 
                 required: 'Message is required', 
                 minLength: { value: 10, message: 'Minimum 10 characters required' } 
               })}
+              disabled={isLoading}
               placeholder="Type your message here..."
-              className="w-full min-h-[120px] p-4 text-xs font-sans bg-gray-50/50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:bg-white transition-all resize-none text-gray-800 placeholder-gray-400"
+              className="w-full min-h-[120px] p-4 text-xs font-sans bg-gray-50/50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:bg-white transition-all resize-none text-gray-800 placeholder-gray-400 disabled:opacity-50"
             />
             {errors.message && (
               <span className="text-[11px] font-mono font-bold text-red-500 pl-1">
@@ -55,15 +69,17 @@ const JoinCourseModal: React.FC<JoinCourseModalProps> = ({ course, isOpen, onClo
             <Button 
               type="button" 
               onClick={onClose} 
-              className="bg-transparent hover:bg-gray-50 text-gray-500 font-bold text-xs px-5 py-2 h-auto rounded-full transition-all border border-gray-100"
+              disabled={isLoading}
+              className="bg-transparent hover:bg-gray-50 text-gray-500 font-bold text-xs px-5 py-2 h-auto rounded-full transition-all border border-gray-100 disabled:opacity-50"
             >
               Cancel
             </Button>
             <Button 
               type="submit" 
-              className="bg-[#f5b813] hover:bg-[#e0a610] text-[#334148] font-bold text-xs px-5 py-2 h-auto rounded-full shadow-sm transition-all border-none"
+              disabled={isLoading}
+              className="bg-[#f5b813] hover:bg-[#e0a610] text-[#334148] font-bold text-xs px-5 py-2 h-auto rounded-full shadow-sm transition-all border-none disabled:opacity-50"
             >
-              Send Request
+              {isLoading ? 'Sending...' : 'Send Request'}
             </Button>
           </DialogFooter>
         </form>
